@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+		"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sean.questionmanage.mapping.userinfo.UserMapper">
+
+	<sql id="columns">
+		user_guid,
+		user_name,
+		user_password,
+		user_gender,
+		user_age,
+		user_date,
+		user_title,
+		user_role
+	</sql>
+	<resultMap type="com.sean.questionmanage.model.userinfo.UserInfo" id="userResultMap">
+		<id property="userGuid" column="user_guid"/>
+		<result property="userName" column="user_name"/>
+		<result property="userPassword" column="user_password"/>
+		<result property="userGender" column="user_gender"/>
+		<result property="userAge" column="user_age"/>
+		<result property="userDate" column="user_date"/>
+		<result property="userTitle" column="user_title"/>
+		<result property="userRole" column="user_role"/>
+	</resultMap>
+	
+	<insert id="insert">
+		insert into qb_user(
+			user_guid,
+			user_name,
+			user_password,
+			user_gender,
+			user_age,
+			user_date,
+			user_title,
+			user_role) 
+		values(
+			#{userGuid},
+			#{userName},
+			#{userPassword},
+			#{userGender},
+			#{userAge},
+			#{userDate},
+			#{userTitle},
+			#{userRole}
+		)
+	</insert>
+	
+	<delete id="delete" parameterType="String">
+		delete from qb_user 
+			where user_guid = #{userGuid} 
+	</delete>
+	
+	<update id="update">
+		update qb_user set 
+		<set>
+			<if test="userName != null and userName != ''">
+				user_name = #{userName},
+			</if>
+			<if test="userPassword != null and userPassword != ''">
+				user_password = #{userPassword},
+			</if>
+			<if test="userGender != null and userGender != ''">
+				user_gender = #{userGender},
+			</if>
+			<if test="userAge != null and userAge != ''">
+				user_age = #{userAge},
+			</if>
+			<if test="userTitle != null and userTitle != ''">
+				user_title = #{userTitle},
+			</if>
+			<if test="userRole != null and userRole != ''">
+				user_role = #{userRole},
+			</if>
+		</set>
+		where user_guid = #{userGuid}
+	</update>
+	
+	<select id="get" parameterType="userinfo" resultMap="userResultMap">
+		select 
+			<include refid="columns"/>
+		from qb_user
+		<where>
+			1=1
+			<if test=""></if>
+		</where>
+	</select>
+
+</mapper>
